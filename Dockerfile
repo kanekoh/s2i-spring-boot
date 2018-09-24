@@ -1,5 +1,5 @@
 # registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
-FROM openshift/base-centos7
+FROM redhat-openjdk-18/openjdk18-openshift
 
 # TODO: Put the maintainer name in the image metadata
 # LABEL maintainer="Your Name <your@email.com>"
@@ -13,17 +13,19 @@ FROM openshift/base-centos7
 #      io.openshift.expose-services="8080:http" \
 #      io.openshift.tags="builder,x.y.z,etc."
 
+#USER root
+
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
-RUN yum install -y rubygems && yum clean all -y
-RUN gem install asdf
+#RUN yum update -y && yum install -y maven && yum clean all -y
+#RUN yum update -y && yum clean all -y
 
 # TODO (optional): Copy the builder files into /opt/app-root
 # COPY ./<builder_folder>/ /opt/app-root/
 
-# TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
+# TODO: Copy the S2I scripts to /usr/local/s2i, since redhat-openjdk-18/openjdk18-openshift image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-COPY ./s2i/bin/ /usr/libexec/s2i
+#COPY ./s2i/bin/ /usr/local/s2i
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 # RUN chown -R 1001:1001 /opt/app-root
@@ -32,7 +34,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 USER 1001
 
 # TODO: Set the default port for applications built using this image
-# EXPOSE 8080
+EXPOSE 8080
 
 # TODO: Set the default CMD for the image
-# CMD ["/usr/libexec/s2i/usage"]
+CMD ["/usr/libexec/s2i/usage"]

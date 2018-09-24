@@ -1,4 +1,4 @@
-IMAGE_NAME = registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+IMAGE_NAME = spring-boot-baser
 
 .PHONY: build
 build:
